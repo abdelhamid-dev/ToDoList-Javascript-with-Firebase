@@ -55,15 +55,15 @@
         // Get data form database
         const todolistCol = collection(db, "todolist");
         onSnapshot(todolistCol, snap => {
-        //console.log(snap.docChanges())
-        snap.docChanges().forEach(task => {
-        if (task.type === "added") {
-        addCourse(task.doc.data(),task.doc.id)
-        }else {
-        deleteTask(task.doc.id)
-        }
-        })
-        })
+            //console.log(snap.docChanges())
+            snap.docChanges().forEach(task => {
+                if (task.type === "added") {
+                    addCourse(task.doc.data(),task.doc.id)
+                }else {
+                    deleteTask(task.doc.id)
+                }
+            });
+        });
 
         // Set Task in ul list
         const list = document.querySelector('ul');
