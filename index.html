@@ -94,6 +94,27 @@
             .then(res => form.reset())
             .catch(err => console.log(err))
         });
+
+        // Delete Task
+        list.addEventListener('click', e => {
+            if(e.target.tagName === "BUTTON") {
+                if(!confirm('Are you sure to delete this task')){
+                    return;
+                }
+                let id = e.target.parentElement.getAttribute('data-id')
+                deleteDoc(doc(db, "todolist", id)).then(() => console.log('deleted')).catch(err => console.log(err))
+            }
+        });
+
+        // Delete task from ul list
+        const deleteTask = id => {
+            const tasks = document.querySelectorAll('li');
+            tasks.forEach(task => {
+                if(task.getAttribute('data-id') === id) {
+                    task.remove();
+                }
+            });
+        };
     </script>
 </body>
 
