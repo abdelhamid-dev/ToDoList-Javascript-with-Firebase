@@ -77,6 +77,23 @@
                      `
                      list.innerHTML += html;
         }
+
+        // Add Task to database
+        const now = Timestamp.fromDate(new Date());
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            const task = {
+            title: form.task.value,
+            created_at: now
+            }
+
+            addDoc(collection(db, "todolist"),task)
+            .then(res => form.reset())
+            .catch(err => console.log(err))
+        });
     </script>
 </body>
 
