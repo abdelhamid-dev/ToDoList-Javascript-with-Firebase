@@ -51,6 +51,32 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+        // Get data form database
+        const todolistCol = collection(db, "todolist");
+        onSnapshot(todolistCol, snap => {
+        //console.log(snap.docChanges())
+        snap.docChanges().forEach(task => {
+        if (task.type === "added") {
+        addCourse(task.doc.data(),task.doc.id)
+        }else {
+        deleteTask(task.doc.id)
+        }
+        })
+        })
+
+        // Set Task in ul list
+        const list = document.querySelector('ul');
+
+        const addCourse = (task, id) => {
+        const html = `<li class="list-group-item" data-id="${id}">
+                        <h3>${task.title}</h3>
+                        <small>${task.created_at.toDate()}</small>
+                        <button class="btn btn-danger btn-sm my-3">Delete</button>
+                      </li>
+                     `
+                     list.innerHTML += html;
+        }
     </script>
 </body>
 
